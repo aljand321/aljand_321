@@ -1,0 +1,19 @@
+sequelize model:create --name User --attributes name:string,username:string,email:string,password:string
+
+sequelize model:create --name admin --attributes nombres:text,apellidos:text,email:string,user:string,password:string,rol:string
+
+sequelize model:create --name tienda --attributes nombreTienda:string,direccion:string,telefono:string,id_userAdmin:string
+
+sequelize model:create --name userVendedor --attributes nombre:string,direccion:string,telefono:string,user:string,password:string,id_tienda:string
+
+sequelize model:create --name ubicaionProducto --attributes cProducto:string,cantodadSoportado:string,id_tienda:string
+
+sequelize model:create --name productos --attributes tipoProducto:string,cantidad:string,precioCompra:string,precioVenta:string,id_tienda:string,id_ubicacion:string
+
+sequelize model:create --name ventas --attributes cantidad:string,precio:string,id_vendedor:string,id_producto:string
+
+sequelize model:create --name tallas --attributes numeroTalla:string,cantidad:string,sexo:string,id_producto:string
+
+sequelize model:create --name color --attributes cantidad:string,nombre:string
+
+sequelize model:create --name userProductVendido --attributes productos:json,precioTotal:string,cantidadTotal:string
