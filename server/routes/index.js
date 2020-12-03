@@ -1,6 +1,9 @@
 import Users from '../controllers/user';
 import Books from '../controllers/book';
 
+import Admin from '../controllers/admin';
+import Tiendas from '../controllers/tienda';
+
 export default (app) => {
 
   app.get('/api', (req, res) => res.status(200).send({
@@ -18,4 +21,15 @@ export default (app) => {
   app.get('/api/list2/:id', Books.list2);
 
   app.get('/userBooks2', Books.userBooks);
+
+  //rutas administrador
+
+  // /admin/api/
+  app.post('/admin/api/', Admin.createAdmin);
+  app.get('/admin/api/', Admin.listAdmin);
+  app.get('/adminTeindas/api/', Admin.AdminTiendas);
+
+  // /tiendas/api/
+  app.post('/tiendas/api/:id_admin', Tiendas.createTienda);
+  app.get('/tiendas/api/', Tiendas.listTiendas);
 };

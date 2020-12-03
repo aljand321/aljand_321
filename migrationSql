@@ -2,18 +2,26 @@ sequelize model:create --name User --attributes name:string,username:string,emai
 
 sequelize model:create --name admin --attributes nombres:text,apellidos:text,email:string,user:string,password:string,rol:string
 
-sequelize model:create --name tienda --attributes nombreTienda:string,direccion:string,telefono:string,id_userAdmin:string
+sequelize model:create --name tienda --attributes nombreTienda:string,direccion:string,telefono:string,id_admin:string
 
-sequelize model:create --name userVendedor --attributes nombre:string,direccion:string,telefono:string,user:string,password:string,id_tienda:string
+sequelize model:create --name Vendedor --attributes nombres:text,apellidos:text,direccion:string,telefono:string,user:string,password:string,id_tienda:integer
 
-sequelize model:create --name ubicaionProducto --attributes cProducto:string,cantodadSoportado:string,id_tienda:string
+sequelize model:create --name Almacen --attributes codigo:string,tamanio:integer,descripcion:text,id_tienda:integer
 
-sequelize model:create --name productos --attributes tipoProducto:string,cantidad:string,precioCompra:string,precioVenta:string,id_tienda:string,id_ubicacion:string
+sequelize model:create --name Tipo  --attributes nombre:string
+sequelize model:create --name Marca  --attributes nombre:string
+sequelize model:create --name Color  --attributes nombre:string
+sequelize model:create --name Talla  --attributes nombre:string
 
-sequelize model:create --name ventas --attributes cantidad:string,precio:string,id_vendedor:string,id_producto:string
 
-sequelize model:create --name tallas --attributes numeroTalla:string,cantidad:string,sexo:string,id_producto:string
+sequelize model:create --name Productos --attributes descripcion:text,cantidad:integer,id_marca:integer,id_tipo:integer,id_almacen:integer
 
-sequelize model:create --name color --attributes cantidad:string,nombre:string
+sequelize model:create --name Ventas --attributes descripcion:text,cantidad:integer,precioSalida:integer,descuento:integer,total:integer,id_vendedor:integer,id_producto:integer,id_talla:integer
+
+sequelize model:create --name DetalleTalla --attributes descripcion:text,cantidad:integer,presioEntrada:integer,precioSalida:integer,totalEntrada:integer,totalSalida:integer,ganancia:integer,id_producto:integer,id_talla:integer
+
+sequelize model:create --name detalleColor --attributes descripcion:text,cantidad:integer,id_detalle_talla:integer,id_color:integer
+
+
 
 sequelize model:create --name userProductVendido --attributes productos:json,precioTotal:string,cantidadTotal:string
