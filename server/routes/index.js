@@ -3,6 +3,15 @@ import Books from '../controllers/book';
 
 import Admin from '../controllers/admin';
 import Tiendas from '../controllers/tienda';
+import Vendedors from '../controllers/vendedor';
+import Almacens from '../controllers/almacen';
+import TipoRopa from '../controllers/tipo';
+import MarcaRopa from '../controllers/marca';
+import ColorRopa from '../controllers/color';
+import TallaRopa from '../controllers/talla';
+import Producto from '../controllers/productos';
+import DetalleTallaP from '../controllers/detalleTalla';
+
 
 export default (app) => {
 
@@ -32,4 +41,40 @@ export default (app) => {
   // /tiendas/api/
   app.post('/tiendas/api/:id_admin', Tiendas.createTienda);
   app.get('/tiendas/api/', Tiendas.listTiendas);
+
+  // /vendedor/api/
+  app.post('/vendedor/api/:id_tienda', Vendedors.createVendedor );
+  app.get('/vendedor/api/', Vendedors.listVendedores);
+  app.delete('/vendedor/api/:id', Vendedors.deleteV);
+
+  // //almacen/api/
+  app.post('/almacen/api/:id_tienda', Almacens.createAlmacen );
+  app.get('/almacen/api/', Almacens.list);
+
+  // /tipo/api/
+  app.post('/tipo/api/', TipoRopa.create);
+  app.get('/tipo/api/', TipoRopa.list);
+
+  // /marca/api/
+  app.post('/marca/api/', MarcaRopa.create);
+  app.get('/marca/api/', MarcaRopa.list);
+
+  // /color/api/
+  app.post('/color/api/', ColorRopa.create);
+  app.get('/color/api/', ColorRopa.list);
+
+  // /talla/api/
+  app.post('/talla/api/', TallaRopa.create);
+  app.get('/talla/api/', TallaRopa.list);
+
+  // /producto/api/
+  app.post('/producto/api/:id_marca/:id_tipo/:id_almacen', Producto.create);
+  app.get('/producto/api/', Producto.list);
+
+  // /detalleTalla/api/
+  app.post('/detalleTalla/api/:id_producto/:id_talla', DetalleTallaP.create);
+  app.get('/detalleTalla/api/', DetalleTallaP.list);
+  app.delete('/detalleTalla/api/:id', DetalleTallaP.delete);
+
+
 };
