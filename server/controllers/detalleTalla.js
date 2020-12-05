@@ -5,57 +5,58 @@ import ValidationDetalleTalla from './validations/detalletalla_v'
 const { DetalleTalla } = model;
 const { Productos } = model
 
-class DetalleTallaP{
-    static async create(req,res){
-        const { descripcion,cantidad,presioEntrada,precioSalida,totalEntrada,totalSalida,ganancia } = req.body;
+class DetalleTallaP {
+    static async create(req, res) {
+        const { descripcion, cantidad, presioEntrada, precioSalida } = req.body;
         const { id_producto, id_talla } = req.params;
         const cantidadProductos = await ValidationDetalleTalla.sacarCantiadProducto(id_producto);
-        const verificar = await ValidationDetalleTalla.Verificar(id_producto);  
-        const verificarcantidad = await ValidationDetalleTalla.VerificarCantidad( {cantidad,cantidadProductos})
-        console.log(cantidadProductos)      
-        //res.status(200).json(verificar)
-        
-        try {           
-            if ( verificarcantidad.succes && verificar == false){                
-                /* const data = await  DetalleTalla.create({
-                    descripcion,cantidad,presioEntrada,precioSalida,totalEntrada,totalSalida,ganancia,id_producto, id_talla
-                }); */                
-                return res.status(200).json({
-                    msg:verificarcantidad.msg,
-                    
-                })
-            }else{
-                res.status(400).json({msg: verificarcantidad.msg})
-            }           
-            
-        } catch (error) {
-            console.log(error);
-            res.status(500).json({
-                msg:"no se puede crear los datos"
-            })
+        const verificar = await ValidationDetalleTalla.Verificar(id_producto);
+        const verficarC_P = await ValidationDetalleTalla.verficarC_P(cantidad, cantidadProductos, id_producto);
+        const v_t_e = await ValidationDetalleTalla.verifiTallaExist(id_producto, id_talla);
+        if (v_t_e) {
+            res.status(400).json({
+                msg: " esta talla ya esta registrado para ese producto"
+            });
+        } else {
+            if (verificar == false) {
+                if (verficarC_P.succes) {
+                    const crearD_P = await ValidationDetalleTalla.createDetalleProducto(descripcion, cantidad, presioEntrada,precioSalida, id_producto, id_talla)
+                    return res.status(200).json({ msg: verficarC_P.msg, crearD_P });
+                } else {
+                    res.status(400).json({ msg: verficarC_P.msg });
+                }
+            } else {
+                if (verficarC_P.succes == true) {
+                    const crearD_P = await ValidationDetalleTalla.createDetalleProducto(descripcion, cantidad, presioEntrada,precioSalida, id_producto, id_talla)
+                    res.status(200).json({ msg: verficarC_P.msg, crearD_P });
+                } else {
+                    res.status(400).json({ msg: verficarC_P.msg });
+                }
+            }
         }
+
     }
-    static async list(req,res){
+    static async list(req, res) {
         try {
             const resp = await DetalleTalla.findAll();
             res.status(200).json({
-                msg:"Lista de Productos o ropas",
+                msg: "Lista de Productos o ropas",
                 resp
             })
         } catch (error) {
             console.log(error);
             res.status(500).json({
-                msg:"no se puede mostrar los datos"
+                msg: "no se puede mostrar los datos"
             })
         }
     }
 
-    static async delete(req,res){
+    static async delete(req, res) {
         try {
             const resp = await DetalleTalla.findByPk(req.params.id);
             await resp.destroy();
             res.status(200).json({
-                msg:"detalle talla elminado",
+                msg: "detalle talla elminado",
                 resp
             })
         } catch (error) {
