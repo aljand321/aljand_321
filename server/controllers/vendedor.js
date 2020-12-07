@@ -1,22 +1,30 @@
 import model from '../models';
-
+const Sequelize = require('sequelize');
+const op = Sequelize.Op;
 const  { Vendedor } = model;
 
 class Vendedors {
     static async createVendedor(req,res){
-        try {
-            const { nombres,apellidos,direccion,telefono,user,password } = req.body;
-            const { id_tienda } = req.params;
-            const resp = await Vendedor.create({
-                nombres,apellidos,direccion,telefono,user,password,id_tienda
+        const { nombres,apellidos,direccion,telefono,user,password } = req.body;
+        const { id_tienda } = req.params;
+        if (await verificarnombreTelefono(user, telefono)){
+            res.status(400).json({
+                msg:"El usario o telefono ya esta registrado"
             })
-            res.status(200).json(resp);
-        } catch (error) {
-            console.error(error);
-            res.status(500).json({
-                msg: "Error no se pudo crear la tabla"
-            })
+        }else{
+            try {
+                const resp = await Vendedor.create({
+                    nombres,apellidos,direccion,telefono,user,password,id_tienda
+                })
+                res.status(200).json(resp);
+            } catch (error) {
+                console.error(error);
+                res.status(500).json({
+                    msg: "Error no se pudo crear la tabla"
+                })
+            }
         }
+        
     }
     static async listVendedores(req,res){
         try {
@@ -46,6 +54,21 @@ class Vendedors {
                 msg: "Error no se pudo eliminar"
             })
         }
+    }
+}
+
+async function verificarnombreTelefono(user, telefono){
+    try {
+        const data = await Vendedor.findOne({
+            where: {
+                [op.or]: [{telefono}, {user}]
+            }
+        })
+        if (data) return true
+        return false
+    } catch (error) {
+        console.log(error);
+        return 'No se puede mostrar los datos'
     }
 }
 

@@ -1,6 +1,6 @@
 import model from '../models';
 
-import ValidationDetalleTalla from './validations/detalletalla_v'
+import ValidationDetalleTalla from './validations/detalletalla_v';
 
 const { DetalleTalla } = model;
 const { Productos } = model

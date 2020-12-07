@@ -12,6 +12,9 @@ import TallaRopa from '../controllers/talla';
 import Producto from '../controllers/productos';
 import DetalleTallaP from '../controllers/detalleTalla';
 
+import ColorDetalle from '../controllers/detalleColor';
+
+
 
 export default (app) => {
 
@@ -68,13 +71,17 @@ export default (app) => {
   app.get('/talla/api/', TallaRopa.list);
 
   // /producto/api/
-  app.post('/producto/api/:id_marca/:id_tipo/:id_almacen', Producto.create);
+  app.post('/producto/api/', Producto.create);
   app.get('/producto/api/', Producto.list);
+
+  app.get('/producto/api/:id_almacen', Producto.pruebas);
 
   // /detalleTalla/api/
   app.post('/detalleTalla/api/:id_producto/:id_talla', DetalleTallaP.create);
   app.get('/detalleTalla/api/', DetalleTallaP.list);
   app.delete('/detalleTalla/api/:id', DetalleTallaP.delete);
 
-
+  // /detalleColor/api/
+  app.post('/detalleColor/api/:id_detalle_talla', ColorDetalle.create);
+  app.get('/detalleColor/api/', ColorDetalle.list);
 };
