@@ -11,8 +11,11 @@ import ColorRopa from '../controllers/color';
 import TallaRopa from '../controllers/talla';
 import Producto from '../controllers/productos';
 import DetalleTallaP from '../controllers/detalleTalla';
+import Precios from '../controllers/precios';
 
 import ColorDetalle from '../controllers/detalleColor';
+import Venta from '../controllers/ventas';
+import precios from '../models/precios';
 
 
 
@@ -75,13 +78,34 @@ export default (app) => {
   app.get('/producto/api/', Producto.list);
 
   app.get('/producto/api/:id_almacen', Producto.pruebas);
+  app.delete('/producto/api', Producto.delteAll);
+
+  
 
   // /detalleTalla/api/
-  app.post('/detalleTalla/api/:id_producto/:id_talla', DetalleTallaP.create);
+  app.post('/detalleTalla/api/:id_producto', DetalleTallaP.create);
   app.get('/detalleTalla/api/', DetalleTallaP.list);
   app.delete('/detalleTalla/api/:id', DetalleTallaP.delete);
 
   // /detalleColor/api/
   app.post('/detalleColor/api/:id_detalle_talla', ColorDetalle.create);
   app.get('/detalleColor/api/', ColorDetalle.list);
+
+  // /ventas/api/
+  app.post('/ventas/api/:id_vendedor', Venta.create);
+  app.get('/ventas/api', Venta.list);
+  //mostrar datos de las tablas  productos detalle tabla y detalle color 
+  app.get('/ventas/api/:id_producto/:id_talla/:id_color', Venta.mostrarCantidades);
+
+  // /precios/api/
+
+  app.post('/precios/api/', Precios.create);
+  app.get('/precios/api/', Precios.list);
+
+
+  //funciones pruevas
+  app.get('/preciosPb/api/:id_producto/:id_talla', Venta.preciosPrueb);
+  app.get('/tallasVendidos/api/', Venta.getTallasVendidas);
+
+  
 };

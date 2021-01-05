@@ -7,6 +7,9 @@ module.exports = (sequelize, DataTypes) => {
     tamanio: {
       type: DataTypes.STRING
     },
+    cantidadDisponible: {
+      type: DataTypes.STRING
+    },
     descripcion: {
       type: DataTypes.STRING
     },

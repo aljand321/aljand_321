@@ -3,42 +3,32 @@ const { Productos } = model
 const { DetalleTalla } = model;
 
 class ValidationDetalleTalla {
-    static async createDetalleProducto(descripcion, cantidad, presioEntrada, precioSalida, id_producto, id_talla) {
-        console.log(descripcion, cantidad, presioEntrada, precioSalida, id_producto, id_talla);
-        var t_E = presioEntrada * cantidad;
-        var t_S = precioSalida * cantidad;
-        var g = t_S - t_E;
+    static async createDetalleProducto(descripcion, cantidad, id_producto, id_talla, id_precios) {
         try {
             const data = await DetalleTalla.create({
                 descripcion,
                 cantidad,
-                presioEntrada,
-                precioSalida,
-                totalEntrada: t_E,
-                totalSalida: t_S,
-                ganancia: g,
                 id_producto,
-                id_talla
+                id_talla,
+                id_precios
             });
             return data
         } catch (error) {
             console.log(error)
             return "No se pudieron crear los datos"
         }
-
-
-
     }
     static async sacarCantiadProducto(id_producto) {
+        console.log(id_producto, " esto es lo que quiero ver ")
         try {
             const producto = await Productos.findOne({
                 where: { id: id_producto },
                 attributes: ['cantidad']
             });
-            return producto.cantidad;
+            return { success:true, cantiad:producto.cantidad }
         } catch (error) {
             console.log(error);
-            return "Error no se puede mostrar la cantidad del producto"
+            return { success:false, msg:"Error, ese producto no existe o la cantiad no se puede mostrar" }
         }
     }
     static async Verificar(id_producto) {
@@ -58,6 +48,7 @@ class ValidationDetalleTalla {
         }
     }
     static async verficarC_P(cantidad, cantidadProductos, id_producto) {
+        var ProductosCantidad = cantidadProductos.cantiad
         try {
             var cant = 0;
             const list = await DetalleTalla.findAll({ where: { id_producto }, attributes: ['cantidad'] });
@@ -65,13 +56,13 @@ class ValidationDetalleTalla {
             for (var i = 0; i < list.length; i++) {
                 cant = list[i].cantidad + cant;
             }
-            var C_v = (cantidadProductos - cant) * 1
+            var C_v = (ProductosCantidad - cant) * 1
             var msg = [
                 { succes: true, msg: "Se crearon los datos" },
                 { succes: false, msg: "cantidad exedida: De este producto queda " + C_v + " para registrar " },
-                { succes: false, msg: "La cantidad no puede ser 0 al" }
+                { succes: false, msg: "La cantidad no puede ser 0 " }
             ]
-            //console.log(C_v, " <<<<<<<<<<< ", cantidad, cantidadProductos,cant);            
+            //console.log(C_v, " <<<<<<<<<<< ", cantidad, ProductosCantidad,cant);            
             if (cantidad <= C_v && cantidad > 0) {
                 return msg[0]
             } else {

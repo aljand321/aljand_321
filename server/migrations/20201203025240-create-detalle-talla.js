@@ -14,21 +14,6 @@ module.exports = {
       cantidad: {
         type: Sequelize.INTEGER
       },
-      presioEntrada: {
-        type: Sequelize.INTEGER
-      },
-      precioSalida: {
-        type: Sequelize.INTEGER
-      },
-      totalEntrada: {
-        type: Sequelize.INTEGER
-      },
-      totalSalida: {
-        type: Sequelize.INTEGER
-      },
-      ganancia: {
-        type: Sequelize.INTEGER
-      },
       id_producto: {
         type: Sequelize.INTEGER,
         onDelete: 'CASCADE',
@@ -44,6 +29,14 @@ module.exports = {
           model: 'Tallas',
           key: 'id',
           as: 'id_talla',
+        }
+      },
+      id_precios: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'precios',
+          key: 'id',
+          as: 'id_precios',
         }
       },
       createdAt: {

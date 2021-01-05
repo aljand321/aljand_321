@@ -6,12 +6,17 @@ module.exports = (sequelize, DataTypes) => {
     }   
   }, {});
   Color.associate = (models) => {
-    // associations can be defined here    
+    // associations can be defined here 
+
     Color.belongsToMany(models.DetalleTalla,{
       through: 'detalleColor',
       as: 'detalleTalla',
       foreignKey: 'id_detalle_talla'
     });
+    Color.hasMany(models.Ventas, {
+      foreignKey: 'id_color',
+    });
+    
   };
   return Color;
 };

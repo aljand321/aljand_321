@@ -1,32 +1,31 @@
 'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Almacens', {
+    await queryInterface.createTable('FechasProductos', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      codigo: {
-        type: Sequelize.STRING
-      },
-      tamanio: {
-        type: Sequelize.INTEGER
-      },
-      cantidadDisponible: {
-        type: Sequelize.INTEGER
-      },
       descripcion: {
         type: Sequelize.TEXT
       },
-      id_tienda: {
+      FechaRegistro: {
+        type: Sequelize.DATE
+      },
+      cantidad: {
+        type: Sequelize.INTEGER
+      },
+      precioTotal: {
+        type: Sequelize.DECIMAL
+      },
+      id_producto: {
         type: Sequelize.INTEGER,
-        onDelete: 'CASCADE',
         references: {
-          model: 'Tiendas',
+          model: 'Productos',
           key: 'id',
-          as: 'id_tienda',
+          as: 'id_producto',
         }
       },
       createdAt: {
@@ -40,6 +39,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Almacens');
+    await queryInterface.dropTable('FechasProductos');
   }
 };

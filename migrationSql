@@ -25,3 +25,13 @@ sequelize model:create --name detalleColor --attributes descripcion:text,cantida
 
 
 sequelize model:create --name userProductVendido --attributes productos:json,precioTotal:string,cantidadTotal:string
+
+sequelize model:create --name precios --attributes precio_entrada:decimal,precio_salida:decimal
+
+sequelize model:create --name VentaRealizada --attributes productos:json,total:decimal,id_vendedor:integer
+
+sequelize model:create --name tallasVendidas --attributes cantidad:integer,id_detalle_talla:integer,id_precios:integer
+
+sequelize model:create --name FechasProductos --attributes descripcion:text,FechaRegistro:date,cantidad:integer,precioTotal:decimal,id_producto:integer
+
+

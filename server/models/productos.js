@@ -7,6 +7,9 @@ module.exports = (sequelize, DataTypes) => {
     cantidad: {
       type: DataTypes.STRING
     },
+    imagenes: {
+      type: DataTypes.JSON
+    },
     id_marca: {
       type: DataTypes.INTEGER,
       references: {
@@ -38,6 +41,9 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'id_vendedor',
     });
     Productos.hasMany(models.DetalleTalla, {
+      foreignKey: 'id_producto',
+    });
+    Productos.hasMany(models.FechasProductos, {
       foreignKey: 'id_producto',
     });
     Productos.belongsTo(models.Marca, {

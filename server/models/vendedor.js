@@ -34,6 +34,9 @@ module.exports = (sequelize, DataTypes) => {
     Vendedor.hasMany(models.Ventas, {
       foreignKey: 'id_vendedor',
     });
+    Vendedor.hasMany(models.VentaRealizada, {
+      foreignKey: 'id_vendedor',
+    });
     Vendedor.belongsTo(models.Tienda, {
       foreignKey: 'id_tienda',
       onDelete: 'CASCADE'

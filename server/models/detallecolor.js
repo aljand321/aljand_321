@@ -1,14 +1,9 @@
-'use strict';
+/* 'use strict';
 const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class detalleColor extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
       // define association here
     }
@@ -23,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
     modelName: 'detalleColor',
   });
   return detalleColor;
-};
+}; */
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const detalleColor = sequelize.define('detalleColor', {
@@ -32,6 +27,9 @@ module.exports = (sequelize, DataTypes) => {
     },
     cantidad: {
       type: DataTypes.INTEGER
+    },
+    imagenes: {
+      type: DataTypes.JSON
     },
     id_detalle_talla: {
       type: DataTypes.INTEGER

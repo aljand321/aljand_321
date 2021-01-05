@@ -50,6 +50,15 @@ module.exports = {
           as: 'id_talla',
         }
       },
+      id_color: {
+        type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
+        references: {
+          model: 'Colors',
+          key: 'id',
+          as: 'id_color',
+        }
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

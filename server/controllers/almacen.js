@@ -24,13 +24,24 @@ class Almacens {
                     msg:"El codigo ya esta registrado"
                 })
             } else{
-                const reps = await Almacen.create({
-                    codigo,tamanio,descripcion,id_tienda
-                });
-                res.status(200).json({
-                    msg:"Se crearon los datos",
-                    reps
-                });
+                if (tamanio <= 5){
+                    return res.status(400).json({
+                        msg:"El tamaño no puede ser menor a 5"
+                    })
+                }else{
+                    const reps = await Almacen.create({
+                        codigo,
+                        tamanio,
+                        cantidadDisponible: tamanio,
+                        descripcion,
+                        id_tienda
+                    });
+                    return res.status(200).json({
+                        msg:"Se crearon los datos",
+                        reps
+                    });
+                }
+                
             }            
         }catch (error) {
             console.log(error);

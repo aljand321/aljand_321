@@ -14,6 +14,9 @@ module.exports = {
       cantidad: {
         type: Sequelize.INTEGER
       },
+      imagenes: {
+        type: Sequelize.JSON
+      },
       id_marca: {
         type: Sequelize.INTEGER,
         onDelete: 'CASCADE',

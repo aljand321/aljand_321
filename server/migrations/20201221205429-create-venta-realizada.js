@@ -1,32 +1,25 @@
 'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Almacens', {
+    await queryInterface.createTable('VentaRealizadas', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      codigo: {
-        type: Sequelize.STRING
+      productos: {
+        type: Sequelize.JSON
       },
-      tamanio: {
-        type: Sequelize.INTEGER
+      total: {
+        type: Sequelize.DECIMAL
       },
-      cantidadDisponible: {
-        type: Sequelize.INTEGER
-      },
-      descripcion: {
-        type: Sequelize.TEXT
-      },
-      id_tienda: {
+      id_vendedor: {
         type: Sequelize.INTEGER,
-        onDelete: 'CASCADE',
         references: {
-          model: 'Tiendas',
+          model: 'Vendedors',
           key: 'id',
-          as: 'id_tienda',
+          as: 'id_vendedor',
         }
       },
       createdAt: {
@@ -40,6 +33,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Almacens');
+    await queryInterface.dropTable('VentaRealizadas');
   }
 };

@@ -40,6 +40,14 @@ module.exports = (sequelize, DataTypes) => {
         as: 'id_talla',
       }
     }, 
+    id_color: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'Color',
+        key: 'id',
+        as: 'id_color',
+      }
+    },
   }, {});
   Ventas.associate = (models) => {
     // associations can be defined here        
@@ -53,6 +61,10 @@ module.exports = (sequelize, DataTypes) => {
     });
     Ventas.belongsTo(models.Talla, {
       foreignKey: 'id_talla',
+      onDelete: 'CASCADE'
+    });
+    Ventas.belongsTo(models.Color, {
+      foreignKey: 'id_color',
       onDelete: 'CASCADE'
     });
   };
