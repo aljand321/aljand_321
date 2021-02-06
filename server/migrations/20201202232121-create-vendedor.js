@@ -26,6 +26,9 @@ module.exports = {
       password: {
         type: Sequelize.STRING
       },
+      rol_vendedor:{
+        type: Sequelize.STRING
+      },
       id_tienda: {
         type: Sequelize.INTEGER,
         onDelete: 'CASCADE',

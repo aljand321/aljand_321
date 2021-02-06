@@ -16,7 +16,7 @@ import Precios from '../controllers/precios';
 import ColorDetalle from '../controllers/detalleColor';
 import Venta from '../controllers/ventas';
 import precios from '../models/precios';
-
+import Login from '../controllers/login_vendedor';
 
 
 export default (app) => {
@@ -98,9 +98,12 @@ export default (app) => {
   app.get('/ventas/api/:id_producto/:id_talla/:id_color', Venta.mostrarCantidades);
 
   // /precios/api/
-
   app.post('/precios/api/', Precios.create);
   app.get('/precios/api/', Precios.list);
+
+  // /login/api
+
+  app.post('/login/api/', Login.login);
 
 
   //funciones pruevas
